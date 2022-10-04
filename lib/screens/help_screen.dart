@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:helpapp/constatns/colors.dart';
 
-class HelpScreen extends StatelessWidget {
-  String title;
-  HelpScreen({
+class HelpScreen extends StatefulWidget {
+  final String title;
+  const HelpScreen({
     super.key,
     required this.title,
   });
 
+  @override
+  State<HelpScreen> createState() => _HelpScreenState();
+}
+
+class _HelpScreenState extends State<HelpScreen> {
+  double? latitude;
+  double? longitude;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -17,7 +25,7 @@ class HelpScreen extends StatelessWidget {
         backgroundColor: AppColors.mainColor,
         appBar: AppBar(
           backgroundColor: AppColors.appbarColor,
-          title: Text(title),
+          title: Text(widget.title),
           centerTitle: true,
         ),
         body: Padding(
@@ -39,11 +47,11 @@ class HelpScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                child: const Visibility(
+                child: Visibility(
                   visible: true,
                   child: Center(
                     child: Text(
-                      'my location is: \nlong: 34.45566777  \nlant:0.54543534535',
+                      'my location is: \nlong: $latitude  \nlant:$longitude',
                       style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -77,8 +85,10 @@ class HelpScreen extends StatelessWidget {
                     side: BorderSide(
                       color: Colors.white.withOpacity(0.5),
                     )),
-                onPressed: () {},
                 child: const Text('ارسال الموقع'),
+                onPressed: () {
+                  getCurrentLocation();
+                },
               ),
               const SizedBox(height: 50),
               Container(
@@ -109,5 +119,34 @@ class HelpScreen extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  void getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      longitude = position.longitude;
+      latitude = position.latitude;
+    });
   }
 }
