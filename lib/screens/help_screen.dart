@@ -15,8 +15,13 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
+  final messageTitle = TextEditingController();
+  final message = TextEditingController();
   double? latitude;
   double? longitude;
+
+  bool? islocated = false;
+  bool? isSended = false;
   @override
   void initState() {
     getCurrentLocation();
@@ -52,6 +57,7 @@ class _HelpScreenState extends State<HelpScreen> {
                         ' مرحبا بك، \n   ${widget.title}  في خدمتك'),
                     const SizedBox(height: 50),
                     TextField(
+                      controller: messageTitle,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         hintText: "موضوع الطلب ",
@@ -66,6 +72,7 @@ class _HelpScreenState extends State<HelpScreen> {
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: message,
                       keyboardType: TextInputType.text,
                       maxLines: 4,
                       decoration: InputDecoration(
@@ -79,29 +86,29 @@ class _HelpScreenState extends State<HelpScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.all(30),
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.6),
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.white,
-                        ),
-                      ),
-                      child: Visibility(
-                        visible: true,
-                        child: Center(
-                          child: Text(
-                            'my location is: \nlong: $latitude  \nlant:$longitude',
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // const SizedBox(height: 20),
+                    // Container(
+                    //   padding: const EdgeInsets.all(30),
+                    //   height: 200,
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white.withOpacity(0.6),
+                    //     borderRadius: BorderRadius.circular(30),
+                    //     border: Border.all(
+                    //       width: 2,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    //   child: Visibility(
+                    //     visible: true,
+                    //     child: Center(
+                    //       child: Text(
+                    //         'my location is: \nlong: $latitude  \nlant:$longitude , ${messageTitle.text} \n  ${message.text} ',
+                    //         style: const TextStyle(fontSize: 20),
+                    //         textAlign: TextAlign.center,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(height: 50),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -119,8 +126,9 @@ class _HelpScreenState extends State<HelpScreen> {
                             side: BorderSide(
                               color: Colors.white.withOpacity(0.5),
                             )),
-                        child: const Text('ارسال الموقع'),
+                        child: const Text('تأكيد الموقع'),
                         onPressed: () {
+                          setState(() {});
                           if (latitude == null) {
                             getCurrentLocation();
                           }
@@ -131,6 +139,8 @@ class _HelpScreenState extends State<HelpScreen> {
                                       lan: longitude!,
                                     )),
                           );
+                          islocated = true;
+                          print('======isLocated = $islocated');
                         },
                       ),
                     ),
@@ -148,16 +158,30 @@ class _HelpScreenState extends State<HelpScreen> {
                           )),
                       child: const Text('ارسال الطلب'),
                       onPressed: () {
-                        if (latitude == null) {
-                          getCurrentLocation();
+                        setState(() {});
+
+                        if (islocated == true) {
+                          if (messageTitle.text.isNotEmpty) {
+                            if (message.text.isNotEmpty) {
+                              isSended = true;
+                            } else {
+                              SnackBar snackBar = const SnackBar(
+                                  content: Text('يرجى كتابة  طلبك'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          } else {
+                            SnackBar snackBar = const SnackBar(
+                                content: Text('يرجى كتابة موضوع الطلب'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        } else {
+                          SnackBar snackBar = const SnackBar(
+                              content:
+                                  Text('يرجى منك تأكيد موقعك قبل إرسال الطلب'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => MapScreen(
-                                    lat: latitude!,
-                                    lan: longitude!,
-                                  )),
-                        );
                       },
                     ),
                     const SizedBox(height: 50),
@@ -172,11 +196,11 @@ class _HelpScreenState extends State<HelpScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      child: const Visibility(
-                        visible: true,
-                        child: Center(
+                      child: Visibility(
+                        visible: isSended == true ? true : false,
+                        child: const Center(
                           child: Text(
-                            'لقد تم تلقي موقعك بنجاح، سيتم الوصول اليك قريبا',
+                            'لقد تم تلقي رسالتك بنجاح، سيتم الوصول اليك قريبا',
                             style: TextStyle(fontSize: 20),
                             textAlign: TextAlign.center,
                           ),
