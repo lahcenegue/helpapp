@@ -17,15 +17,15 @@ class HelpIcon extends StatelessWidget {
       child: Stack(
         children: [
           const SizedBox(
-            height: 95,
-            width: 100,
+            height: 65,
+            width: 80,
           ),
           Positioned(
             bottom: 0,
             left: 0,
             child: Container(
-              height: 60,
-              width: 100,
+              height: 40,
+              width: 80,
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
@@ -42,7 +42,7 @@ class HelpIcon extends StatelessWidget {
                 ],
               ),
               child: const Padding(
-                padding: EdgeInsets.only(top: 25, bottom: 5),
+                padding: EdgeInsets.only(top: 8, bottom: 3),
                 child: Text(
                   'مساعدة',
                   textAlign: TextAlign.center,
@@ -55,10 +55,10 @@ class HelpIcon extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 10,
+            left: 15,
             child: Image.asset(
               'images/headphone.png',
-              width: 80,
+              width: 50,
             ),
           )
         ],

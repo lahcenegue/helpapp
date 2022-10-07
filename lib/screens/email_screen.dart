@@ -27,14 +27,14 @@ class _EmailScreenState extends State<EmailScreen> {
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'الاميل',
+                  labelText: 'البريد الالكتروني',
                 ),
               ),
               const SizedBox(height: 20),
               const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'موضوع المساعدة',
+                  labelText: 'الموضوع',
                 ),
               ),
               const SizedBox(height: 20),
@@ -42,7 +42,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 maxLines: 8,
                 textAlignVertical: TextAlignVertical.top,
                 decoration: InputDecoration(
-                  labelText: 'محتوى الطلب',
+                  labelText: 'الرسالة',
                   border: OutlineInputBorder(),
                 ),
               ),
