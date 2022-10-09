@@ -34,15 +34,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 isLastPage = value == 2;
               });
             },
-            children: const [
+            children: [
               Center(
-                child: Text('page1'),
+                child: Column(
+                  children: const [
+                    Text('image'),
+                    Text('page1'),
+                  ],
+                ),
               ),
               Center(
-                child: Text('page2'),
+                child: Column(
+                  children: const [
+                    Text('image'),
+                    Text('page2'),
+                  ],
+                ),
               ),
               Center(
-                child: Text('page3'),
+                child: Column(
+                  children: const [
+                    Text('image '),
+                    Text('page3'),
+                  ],
+                ),
               ),
             ],
           ),
