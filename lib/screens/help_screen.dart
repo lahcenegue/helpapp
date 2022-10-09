@@ -165,20 +165,26 @@ class _HelpScreenState extends State<HelpScreen> {
                               isSended = true;
                             } else {
                               SnackBar snackBar = const SnackBar(
-                                  content: Text('يرجى كتابة  طلبك'));
+                                content: Text('يرجى كتابة  طلبك'),
+                                backgroundColor: Colors.red,
+                              );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             }
                           } else {
                             SnackBar snackBar = const SnackBar(
-                                content: Text('يرجى كتابة موضوع الطلب'));
+                              content: Text('يرجى كتابة موضوع الطلب'),
+                              backgroundColor: Colors.red,
+                            );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           }
                         } else {
                           SnackBar snackBar = const SnackBar(
-                              content:
-                                  Text('يرجى منك تأكيد موقعك قبل إرسال الطلب'));
+                            content:
+                                Text('يرجى منك تأكيد موقعك قبل إرسال الطلب'),
+                            backgroundColor: Colors.red,
+                          );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       },
