@@ -19,14 +19,11 @@ class HelpTools extends StatelessWidget {
           title: const Text('وسائل الدعم'),
           centerTitle: true,
         ),
-        body: ListView.separated(
+        body: ListView.builder(
           itemCount: data.helpToolsNames.length,
-          separatorBuilder: (context, index) {
-            return const SizedBox(height: 10);
-          },
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 60),
+              padding: const EdgeInsets.only(left: 50, right: 50, top: 60),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.scondColor,
