@@ -140,7 +140,6 @@ class _HelpScreenState extends State<HelpScreen> {
                                     )),
                           );
                           islocated = true;
-                          print('======isLocated = $islocated');
                         },
                       ),
                     ),
