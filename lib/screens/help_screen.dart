@@ -51,10 +51,15 @@ class _HelpScreenState extends State<HelpScreen> {
                 ),
                 child: ListView(
                   children: [
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 60),
                     Text(
-                        textAlign: TextAlign.center,
-                        ' مرحبا بك، \n   ${widget.title}  في خدمتك'),
+                      textAlign: TextAlign.center,
+                      ' مرحبا بك، \n   ${widget.title}  في خدمتك',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 50),
                     TextField(
                       controller: messageTitle,
@@ -74,7 +79,7 @@ class _HelpScreenState extends State<HelpScreen> {
                     TextField(
                       controller: message,
                       keyboardType: TextInputType.text,
-                      maxLines: 4,
+                      maxLines: 5,
                       decoration: InputDecoration(
                         hintText: "اكتب رسالتك هنا ... ",
                         filled: true,
@@ -162,7 +167,26 @@ class _HelpScreenState extends State<HelpScreen> {
                         if (islocated == true) {
                           if (messageTitle.text.isNotEmpty) {
                             if (message.text.isNotEmpty) {
-                              isSended = true;
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Image.asset(
+                                          'images/ok.png',
+                                          height: 100,
+                                          width: 100,
+                                        ),
+                                        content: const Text(
+                                          'لقد تم تلقي رسالتك بنجاح، سيتم الوصول اليك قريبا',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text('حسنا'))
+                                        ],
+                                      ));
                             } else {
                               SnackBar snackBar = const SnackBar(
                                 content: Text('يرجى كتابة  طلبك'),
@@ -190,29 +214,29 @@ class _HelpScreenState extends State<HelpScreen> {
                       },
                     ),
                     const SizedBox(height: 50),
-                    Container(
-                      padding: const EdgeInsets.all(30),
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.6),
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.white,
-                        ),
-                      ),
-                      child: Visibility(
-                        visible: isSended == true ? true : false,
-                        child: const Center(
-                          child: Text(
-                            'لقد تم تلقي رسالتك بنجاح، سيتم الوصول اليك قريبا',
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
+                    // Container(
+                    //   padding: const EdgeInsets.all(30),
+                    //   height: 150,
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white.withOpacity(0.6),
+                    //     borderRadius: BorderRadius.circular(30),
+                    //     border: Border.all(
+                    //       width: 2,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    //   child: Visibility(
+                    //     visible: isSended == true ? true : false,
+                    //     child: const Center(
+                    //       child: Text(
+                    //         'لقد تم تلقي رسالتك بنجاح، سيتم الوصول اليك قريبا',
+                    //         style: TextStyle(fontSize: 20),
+                    //         textAlign: TextAlign.center,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 20),
                   ],
                 ),
               ),
